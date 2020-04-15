@@ -1,8 +1,7 @@
-link: lab06.o 
-	g++ -o lab06 lab06.o
+link: firstline.cpp 
+	g++ -Wall -std=c++14 -g -pedantic-errors -o firstline firstline.cpp
 
-lab06.o: lab06.cpp
-	g++ -c -Wall -std=c++14 -g -pedantic-errors lab06.cpp
-
+firstline: firstline.cpp
+	g++ -Wall -std=c++14 -g -pedantic-errors -o firstline firstline.cpp
 clean:
 	/bin/rm p1 *.o
