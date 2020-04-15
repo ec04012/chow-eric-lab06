@@ -3,12 +3,13 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <iostream>
+
 using namespace std;
 
 /**
  * Gets file from args.
- * Prints the first line of a file, or until the end of the file.
- * Whichever comes first.
+ * Prints the length of longest line
  **/
 int main(int argc, char* argv[]) {
     // Length of longest line
@@ -27,14 +28,20 @@ int main(int argc, char* argv[]) {
     // n = bytes read, (1 byte). Put byte in buf
     while (read(fd, buf, BUFFSIZE) > 0) {
         temp = temp + 1;
-        if (buf[0] != '\n') {
+        // If we reach a /n, compare temp to max and update if needed
+        if (buf[0] == '\n') {
             if (temp > max) {
-                max = temp;
+                max = temp - 1; // temp-1 to account for /n char
             }
             temp = 0;
         }
     }
-    // Write longest line length
-    write(STDOUT_FILENO, &max, BUFFSIZE);
+
+    // If we reach end of file, compare lengths for the last time
+    if (temp > max) {
+        max = temp;
+    }
+    // Print longest line length
+    cout << max << endl;
     return 0;
 }
